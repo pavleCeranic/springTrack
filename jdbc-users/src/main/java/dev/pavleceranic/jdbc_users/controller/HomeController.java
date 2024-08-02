@@ -1,5 +1,6 @@
 package dev.pavleceranic.jdbc_users.controller;
 
+import dev.pavleceranic.jdbc_users.model.User;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin
 public class HomeController {
+
 
     @GetMapping("/")
     public String home(HttpSession session, Principal princ) {
@@ -42,7 +44,7 @@ public class HomeController {
         return "this is myUser";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/logins")
     public String doMyLogin() throws URISyntaxException, IOException {
 
         var response = "Hello";
@@ -58,10 +60,11 @@ public class HomeController {
 
     }
 
-    @GetMapping("logins")
+    @GetMapping("/login")
     public RedirectView login() {
         return new RedirectView("http://localhost:3000/register");
     }
+
     @PostMapping("/login")
     public void login(@RequestParam String username, @RequestParam String password, HttpSession session, HttpSecurity security) {
         System.out.println(session.getCreationTime());
